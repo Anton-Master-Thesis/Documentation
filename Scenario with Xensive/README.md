@@ -83,3 +83,21 @@ This is done in the same way but with different values.
 * The interfaceId is the interface used.
 
 After this is done everything should be able to connect and run.
+
+## Future work (Copied from thesis)
+There are quite a lot of improvements which can be done to the artifact presented in this thesis.
+The most important parts to fix are two bugs which have been encountered.
+The first bug is that the status code is not updated from the HTTP library used when when sending a HTTP request and then reading the response.
+This bug has been brought up to the developers of the library but there was not enough time to follow through with a more rigorous search for a cause and solution.
+The second bug is that sometimes the library for creating the TCP connection returns a false positive that a TCP connection has been established.
+Because of this the functions try to send the HTTP request to an unconnected socket which results in an error.
+Both of these bugs have been built around in a less than ideal way and therefore needs to be addressed if there is a continuation of the development of the artifact.
+
+Another thing to add to the artifact is the ability to establish a TCP connection using TLS.
+This could not be done to the artifact due to a need to change the library which establishes the TCP connection.
+Some alternatives have been found possible to use in this regard, mainly a freeRTOS implementation of either ""mbed_tls" or "wolfssl".
+Both of these have been looked at on a surface level and seem as good canditates but where unable to be implemented for this thesis because of the complexity to change to either of these libraries.
+
+There are also performance improving changes which could be made.
+Currently there is a TCP connection being established from the sensor system to the EventHandler each time a publish request is made.
+This might be changed to persistent TCP connection with which to send the HTTP requests and thus reducing the overhead of the publishing functionality of the sensor system.
